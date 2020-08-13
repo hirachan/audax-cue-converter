@@ -4,12 +4,11 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Border, Font, Side
 from openpyxl.formatting.rule import FormulaRule
 
-from .cue import Cue
+from cue import Cue
 
 
 class Nihonbashi:
     def write(self, cues: List[Cue], filepath: str):
-        print(cues)
         wb = Workbook()
         ws = wb.active
         ws.title = "Cue"

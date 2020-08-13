@@ -6,7 +6,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from .cue import Cue
+from cue import Cue
 
 _RE_INTERSECTION = re.compile(r"(\S+)（交差点）")
 _RE_DIRECTION = re.compile(r"(右折|左折|斜め右|斜め左|Turn right|Turn left|Slight right|Slight left)")
@@ -155,7 +155,7 @@ class RideWithGPS:
 
             distance = float(row[4])
 
-            print(row)
+            # print(row)
 
             intersection = get_intersection(notes)
             direction = get_direction(notes)
