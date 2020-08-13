@@ -4,7 +4,10 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Border, Font, Side
 from openpyxl.formatting.rule import FormulaRule
 
-from cue import Cue
+try:
+    from cue import Cue
+except ModuleNotFoundError:  # This is for lambda...
+    from .cue import Cue
 
 
 class Nihonbashi:
