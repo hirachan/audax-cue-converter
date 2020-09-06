@@ -16,6 +16,20 @@ Example.
 cue-convert -o BRM523-2020.xlsx 30477783
 ```
 
+## How to use (Docker)
+
+Build container image.
+```console
+docker build -t audax-cue-converter .
+```
+
+Invoke in container.
+Example.
+```console
+docker run -it --rm -v $(pwd)/output:/output audax-cue-converter -o /output/BRM523-2020.xlsx 30477783
+```
+
+
 ## Deploy to AWS Lambda
 
 Prepare for serverless framework and its plugins.

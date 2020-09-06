@@ -11,11 +11,7 @@ setup(
     name="audax_cue_converter",
     version=version,
     packages=find_packages("src"),
-    install_requires=[
-        "requests",
-        "beautifulsoup4",
-        "openpyxl",
-    ],
+    install_requires=open("requirements.txt", "r").readlines(),
     extras_require={
         "test": [
             "pytest",
