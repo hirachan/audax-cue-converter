@@ -17,7 +17,7 @@ _RE_DIRECTION = re.compile(r"(右折|左折|斜め右|斜め左|Turn right|Turn 
 _RE_ROAD = re.compile(r"(?:[し出]て|で|曲がり|折れて) ?(?:、?そのまま ?)?(\S+) ?(?:に入る|を進む|へ進む)|(?:onto |stay on )(\S+)")
 _RE_ROAD_STRAIGHT = re.compile(r"^(\S+)を進む")
 _RE_ROAD_TOWARD = re.compile(r"(\S+) に向かう|toward (\S+)")
-_RE_SIGN = re.compile(r"\((\S+) の表示\)")
+_RE_SIGN = re.compile(r"\((?:(\S+) の表示|signs for (\S+))\)")
 
 DIRECTION = {
     "右折": "R",
@@ -66,7 +66,7 @@ def get_direction(notes: str) -> str:
 def get_sign(notes: str) -> str:
     m = _RE_SIGN.search(notes)
     if m:
-        sign = m.groups()[0]
+        sign = m.groups()[0] or m.groups()[1]
     else:
         sign = ""
 
@@ -140,10 +140,13 @@ def put_title(cue_writer: csv.writer) -> None:
 
 class RideWithGPS:
     def read(self, route_id: str, privacy_code: Optional[str] = None) -> List[Cue]:
+        headers = {"Accept-Language": "ja-JP"}
         if privacy_code:
-            res = requests.get(f"https://ridewithgps.com/routes/{route_id}/cue_sheet?privacy_code={privacy_code}")
+            res = requests.get(f"https://ridewithgps.com/routes/{route_id}/cue_sheet?privacy_code={privacy_code}",
+                               headers=headers)
         else:
-            res = requests.get(f"https://ridewithgps.com/routes/{route_id}/cue_sheet")
+            res = requests.get(f"https://ridewithgps.com/routes/{route_id}/cue_sheet",
+                               headers=headers)
 
         bs = BeautifulSoup(res.content, "html.parser")
         # print(bs)
@@ -157,7 +160,7 @@ class RideWithGPS:
             if notes == "直進する":
                 continue
 
-            distance = float(row[4])
+            distance = float(row[4].replace(",", "."))
 
             # print(row)
 

@@ -13,3 +13,10 @@ def test_2():
     expect = "磐越自動車道・須賀川・国道49号"
 
     assert get_sign(s) == expect
+
+
+def test_3():
+    s = "Turn right onto 県道13号 (signs for 国道49号線)"
+    expect = "国道49号線"
+
+    assert get_sign(s) == expect
