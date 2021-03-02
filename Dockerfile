@@ -2,7 +2,7 @@ FROM python:3.8-buster as builder
 
 WORKDIR /app
 
-COPY requirements.txt /app
+COPY src/audax_cue_converter/requirements.txt /app
 RUN pip3 install -r requirements.txt
 
 FROM python:3.8-slim-buster as runner
